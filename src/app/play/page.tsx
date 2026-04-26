@@ -7,7 +7,7 @@ export default function Play() {
       <h1 className="text-center font-serif text-5xl italic leading-tight tracking-tight sm:text-7xl">
         You&apos;ve entered
         <br />
-        the quantum.
+        the quantum era.
       </h1>
       <p className="mt-8 max-w-md text-center text-sm text-white/60 sm:text-base">
         The trivia game lives here. Coming soon — for now, ask Dr. Q for a
