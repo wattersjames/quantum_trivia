@@ -1,12 +1,22 @@
 "use client";
 
-import { useState } from "react";
 import type { Question } from "@/data/questions";
 
-type Props = { question: Question };
+type Props = {
+  question: Question;
+  selected: number | null;
+  onSelect: (i: number) => void;
+  onNext: () => void;
+  isLast?: boolean;
+};
 
-export default function QuestionCard({ question }: Props) {
-  const [selected, setSelected] = useState<number | null>(null);
+export default function QuestionCard({
+  question,
+  selected,
+  onSelect,
+  onNext,
+  isLast = false,
+}: Props) {
   const isAnswered = selected !== null;
   const isCorrect = selected === question.correctIndex;
 
@@ -40,7 +50,7 @@ export default function QuestionCard({ question }: Props) {
               <button
                 type="button"
                 disabled={isAnswered}
-                onClick={() => setSelected(i)}
+                onClick={() => onSelect(i)}
                 className={cls}
               >
                 <span className="mr-3 font-mono text-sm text-white/60">
@@ -72,10 +82,10 @@ export default function QuestionCard({ question }: Props) {
 
           <button
             type="button"
-            onClick={() => setSelected(null)}
-            className="text-xs uppercase tracking-[0.3em] text-white/50 transition-colors hover:text-white"
+            onClick={onNext}
+            className="rounded-full bg-indigo-500 px-6 py-2 text-sm font-semibold uppercase tracking-[0.3em] text-white transition-colors hover:bg-indigo-600"
           >
-            Try again →
+            {isLast ? "Finish" : "Next →"}
           </button>
         </div>
       )}
