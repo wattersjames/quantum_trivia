@@ -1,0 +1,132 @@
+"use client";
+
+import { useChat } from "@ai-sdk/react";
+import { useEffect, useRef, useState } from "react";
+
+export default function Chat() {
+  const [open, setOpen] = useState(false);
+  const [input, setInput] = useState("");
+  const { messages, status, sendMessage } = useChat();
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight });
+  }, [messages]);
+
+  const onSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!input.trim() || status !== "ready") return;
+    sendMessage({ text: input });
+    setInput("");
+  };
+
+  if (!open) {
+    return (
+      <button
+        onClick={() => setOpen(true)}
+        className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 text-white shadow-lg transition-transform hover:scale-105 active:scale-95"
+        aria-label="Open chat with Dr. Q"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          className="h-6 w-6"
+        >
+          <path d="M12 3a9 9 0 0 0-9 9c0 1.6.42 3.1 1.16 4.4L3 21l4.7-1.13A9 9 0 1 0 12 3Z" />
+        </svg>
+      </button>
+    );
+  }
+
+  return (
+    <div className="fixed bottom-6 right-6 z-50 flex h-[32rem] w-[22rem] flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-2xl dark:border-zinc-800 dark:bg-zinc-950">
+      <header className="flex items-center justify-between bg-gradient-to-br from-indigo-500 to-purple-600 px-4 py-3 text-white">
+        <div>
+          <div className="text-sm font-semibold">Dr. Q</div>
+          <div className="text-xs opacity-80">Quantum trivia host</div>
+        </div>
+        <button
+          onClick={() => setOpen(false)}
+          className="rounded-full p-1 hover:bg-white/20"
+          aria-label="Close chat"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            className="h-5 w-5"
+          >
+            <path d="M6.225 4.811a1 1 0 0 0-1.414 1.414L10.586 12 4.81 17.775a1 1 0 1 0 1.414 1.414L12 13.414l5.775 5.775a1 1 0 0 0 1.414-1.414L13.414 12l5.775-5.775a1 1 0 0 0-1.414-1.414L12 10.586 6.225 4.811Z" />
+          </svg>
+        </button>
+      </header>
+
+      <div
+        ref={scrollRef}
+        className="flex-1 overflow-y-auto px-4 py-3 space-y-3 text-sm"
+      >
+        {messages.length === 0 && (
+          <div className="text-zinc-500 dark:text-zinc-400">
+            Ask Dr. Q for a quantum trivia question, a hint, or to explain
+            something weird about the quantum world.
+          </div>
+        )}
+        {messages.map((m) => (
+          <div
+            key={m.id}
+            className={
+              m.role === "user"
+                ? "ml-auto max-w-[85%] rounded-2xl rounded-br-sm bg-indigo-500 px-3 py-2 text-white"
+                : "mr-auto max-w-[85%] rounded-2xl rounded-bl-sm bg-zinc-100 px-3 py-2 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100"
+            }
+          >
+            {m.parts
+              .filter((p) => p.type === "text")
+              .map((p, i) => (
+                <span key={i} className="whitespace-pre-wrap">
+                  {p.text}
+                </span>
+              ))}
+          </div>
+        ))}
+        {(status === "submitted" || status === "streaming") && (
+          <div className="mr-auto max-w-[85%] rounded-2xl rounded-bl-sm bg-zinc-100 px-3 py-2 text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400">
+            <span className="inline-flex gap-1">
+              <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-current [animation-delay:-0.3s]" />
+              <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-current [animation-delay:-0.15s]" />
+              <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-current" />
+            </span>
+          </div>
+        )}
+        {status === "error" && (
+          <div className="text-xs text-red-500">
+            Something went wrong. Try again in a moment.
+          </div>
+        )}
+      </div>
+
+      <form
+        onSubmit={onSubmit}
+        className="border-t border-zinc-200 p-3 dark:border-zinc-800"
+      >
+        <div className="flex items-center gap-2">
+          <input
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder="Ask Dr. Q..."
+            disabled={status !== "ready"}
+            className="flex-1 rounded-full border border-zinc-200 bg-white px-4 py-2 text-sm text-zinc-900 placeholder:text-zinc-400 focus:border-indigo-500 focus:outline-none disabled:opacity-60 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100"
+          />
+          <button
+            type="submit"
+            disabled={status !== "ready" || !input.trim()}
+            className="rounded-full bg-indigo-500 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-indigo-600 disabled:opacity-50"
+          >
+            Send
+          </button>
+        </div>
+      </form>
+    </div>
+  );
+}
