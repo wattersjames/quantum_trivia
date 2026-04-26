@@ -4,6 +4,8 @@ import { useState } from "react";
 import { questions as pool } from "@/data/questions";
 import type { Question } from "@/data/questions";
 import { pickRound } from "@/lib/quiz";
+import { QuizProvider, type QuizContextValue } from "@/lib/quiz-context";
+import Chat from "./Chat";
 import QuestionCard from "./QuestionCard";
 import ScoreScreen from "./ScoreScreen";
 
@@ -39,9 +41,19 @@ export default function Quiz({ roundSize = 100 }: Props) {
     }
   };
 
+  const currentQuestion: Question | undefined =
+    phase === "playing" ? questions[currentIndex] : undefined;
+  const currentAnswer =
+    phase === "playing" ? answers[currentIndex] : null;
+
+  const contextValue: QuizContextValue | null = currentQuestion
+    ? { question: currentQuestion, selectedIndex: currentAnswer }
+    : null;
+
+  let body: React.ReactNode;
   if (phase === "idle") {
     const size = Math.min(roundSize, pool.length);
-    return (
+    body = (
       <div className="text-center">
         <h1 className="mb-3 font-serif text-4xl italic text-white sm:text-5xl">
           Ready?
@@ -59,33 +71,35 @@ export default function Quiz({ roundSize = 100 }: Props) {
         </button>
       </div>
     );
-  }
-
-  if (phase === "finished") {
-    return (
+  } else if (phase === "finished") {
+    body = (
       <ScoreScreen
         questions={questions}
         answers={answers}
         onRestart={() => setPhase("idle")}
       />
     );
+  } else {
+    body = (
+      <div className="flex w-full flex-col items-center">
+        <p className="mb-4 text-xs uppercase tracking-[0.4em] text-white/40">
+          Question {currentIndex + 1} / {questions.length}
+        </p>
+        <QuestionCard
+          question={currentQuestion!}
+          selected={currentAnswer}
+          onSelect={handleSelect}
+          onNext={handleNext}
+          isLast={currentIndex === questions.length - 1}
+        />
+      </div>
+    );
   }
 
-  const currentQuestion = questions[currentIndex];
-  const currentAnswer = answers[currentIndex];
-
   return (
-    <div className="flex w-full flex-col items-center">
-      <p className="mb-4 text-xs uppercase tracking-[0.4em] text-white/40">
-        Question {currentIndex + 1} / {questions.length}
-      </p>
-      <QuestionCard
-        question={currentQuestion}
-        selected={currentAnswer}
-        onSelect={handleSelect}
-        onNext={handleNext}
-        isLast={currentIndex === questions.length - 1}
-      />
-    </div>
+    <QuizProvider value={contextValue}>
+      {body}
+      <Chat />
+    </QuizProvider>
   );
 }

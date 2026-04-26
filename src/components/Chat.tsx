@@ -2,12 +2,14 @@
 
 import { useChat } from "@ai-sdk/react";
 import { useEffect, useRef, useState } from "react";
+import { useQuizContext } from "@/lib/quiz-context";
 
 export default function Chat() {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
   const { messages, status, sendMessage } = useChat();
   const scrollRef = useRef<HTMLDivElement>(null);
+  const quizContext = useQuizContext();
 
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight });
@@ -16,7 +18,10 @@ export default function Chat() {
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim() || status !== "ready") return;
-    sendMessage({ text: input });
+    sendMessage(
+      { text: input },
+      { body: { questionContext: quizContext ?? null } },
+    );
     setInput("");
   };
 
@@ -68,8 +73,9 @@ export default function Chat() {
       >
         {messages.length === 0 && (
           <div className="text-zinc-500 dark:text-zinc-400">
-            Ask Dr. Q for a quantum trivia question, a hint, or to explain
-            something weird about the quantum world.
+            {quizContext
+              ? "Stuck on this one? Ask Dr. Q for a hint — or have him explain the physics after you've answered."
+              : "Ask Dr. Q for a quantum trivia question, a hint, or to explain something weird about the quantum world."}
           </div>
         )}
         {messages.map((m) => (

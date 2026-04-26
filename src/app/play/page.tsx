@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Chat from "@/components/Chat";
 import Quiz from "@/components/Quiz";
 
 export default function Play() {
@@ -24,8 +23,6 @@ export default function Play() {
 
         <Quiz roundSize={100} />
       </div>
-
-      <Chat />
     </div>
   );
 }
