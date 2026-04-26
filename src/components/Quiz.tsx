@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { questions as pool } from "@/data/questions";
 import type { Question } from "@/data/questions";
 import { pickRound } from "@/lib/quiz";
@@ -17,6 +17,16 @@ export default function Quiz({ roundSize = 100 }: Props) {
   const [questions, setQuestions] = useState<Question[]>([]);
   const [answers, setAnswers] = useState<(number | null)[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [pendingChatRequest, setPendingChatRequest] = useState<string | null>(
+    null,
+  );
+
+  const requestHint = useCallback(() => {
+    setPendingChatRequest("Can I get a hint?");
+  }, []);
+  const clearChatRequest = useCallback(() => {
+    setPendingChatRequest(null);
+  }, []);
 
   const start = () => {
     const round = pickRound(pool, roundSize);
@@ -47,7 +57,13 @@ export default function Quiz({ roundSize = 100 }: Props) {
     phase === "playing" ? answers[currentIndex] : null;
 
   const contextValue: QuizContextValue | null = currentQuestion
-    ? { question: currentQuestion, selectedIndex: currentAnswer }
+    ? {
+        question: currentQuestion,
+        selectedIndex: currentAnswer,
+        pendingChatRequest,
+        requestHint,
+        clearChatRequest,
+      }
     : null;
 
   let body: React.ReactNode;

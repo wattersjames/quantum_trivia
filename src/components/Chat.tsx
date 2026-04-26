@@ -15,15 +15,32 @@ export default function Chat() {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight });
   }, [messages]);
 
+  const buildBody = () => ({
+    questionContext: quizContext
+      ? {
+          question: quizContext.question,
+          selectedIndex: quizContext.selectedIndex,
+        }
+      : null,
+  });
+
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim() || status !== "ready") return;
-    sendMessage(
-      { text: input },
-      { body: { questionContext: quizContext ?? null } },
-    );
+    sendMessage({ text: input }, { body: buildBody() });
     setInput("");
   };
+
+  const pendingRequest = quizContext?.pendingChatRequest ?? null;
+  useEffect(() => {
+    if (!pendingRequest || status !== "ready" || !quizContext) return;
+    setOpen(true);
+    quizContext.clearChatRequest();
+    sendMessage({ text: pendingRequest }, { body: buildBody() });
+    // We intentionally don't include quizContext / sendMessage / buildBody in
+    // deps — we only want to fire when the trigger or readiness changes.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pendingRequest, status]);
 
   if (!open) {
     return (

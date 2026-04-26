@@ -6,6 +6,9 @@ import type { Question } from "@/data/questions";
 export type QuizContextValue = {
   question: Question;
   selectedIndex: number | null;
+  pendingChatRequest: string | null;
+  requestHint: () => void;
+  clearChatRequest: () => void;
 };
 
 const QuizContext = createContext<QuizContextValue | null>(null);

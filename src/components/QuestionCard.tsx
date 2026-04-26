@@ -1,6 +1,7 @@
 "use client";
 
 import type { Question } from "@/data/questions";
+import { useQuizContext } from "@/lib/quiz-context";
 
 type Props = {
   question: Question;
@@ -19,6 +20,7 @@ export default function QuestionCard({
 }: Props) {
   const isAnswered = selected !== null;
   const isCorrect = selected === question.correctIndex;
+  const ctx = useQuizContext();
 
   return (
     <div className="w-full max-w-2xl rounded-2xl border border-white/10 bg-white/5 p-8 shadow-2xl backdrop-blur-sm">
@@ -62,6 +64,16 @@ export default function QuestionCard({
           );
         })}
       </ul>
+
+      {!isAnswered && ctx && (
+        <button
+          type="button"
+          onClick={() => ctx.requestHint()}
+          className="mt-5 text-xs uppercase tracking-[0.3em] text-white/40 transition-colors hover:text-white"
+        >
+          Get a hint from Dr. Q →
+        </button>
+      )}
 
       {isAnswered && (
         <div className="mt-6 space-y-4">
