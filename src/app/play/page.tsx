@@ -1,18 +1,13 @@
 import Link from "next/link";
 import Chat from "@/components/Chat";
+import QuestionCard from "@/components/QuestionCard";
+import { questions } from "@/data/questions";
 
 export default function Play() {
+  const question = questions[0];
+
   return (
-    <div className="relative flex flex-1 flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-zinc-950 via-indigo-950 to-zinc-950 px-6 text-white">
-      <h1 className="text-center font-serif text-5xl italic leading-tight tracking-tight sm:text-7xl">
-        You&apos;ve entered
-        <br />
-        the quantum era.
-      </h1>
-      <p className="mt-8 max-w-md text-center text-sm text-white/60 sm:text-base">
-        The trivia game lives here. Coming soon — for now, ask Dr. Q for a
-        question.
-      </p>
+    <div className="relative flex flex-1 flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-zinc-950 via-indigo-950 to-zinc-950 px-6 py-24 text-white">
       <Link
         href="/"
         className="group absolute top-10 left-10 text-xs uppercase tracking-[0.4em] text-white/40 transition-colors hover:text-white"
@@ -22,6 +17,15 @@ export default function Play() {
         </span>
         Back
       </Link>
+
+      <div className="mb-8 text-center">
+        <p className="text-xs uppercase tracking-[0.4em] text-white/40">
+          Quantum Trivia
+        </p>
+      </div>
+
+      <QuestionCard question={question} />
+
       <Chat />
     </div>
   );
