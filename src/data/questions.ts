@@ -147,4 +147,139 @@ export const questions: Question[] = [
     explanation:
       "Einstein, Podolsky, and Rosen argued in 1935 that QM must be incomplete because it predicted distant particles to be correlated regardless of separation, seemingly violating locality. Bell's theorem and later experiments confirmed the correlations are real — but they cannot be used to transmit information faster than light.",
   },
+  {
+    id: "einstein-nobel",
+    prompt:
+      "For what work did Albert Einstein win the 1921 Nobel Prize in Physics?",
+    choices: [
+      "The theory of special relativity",
+      "The theory of general relativity",
+      "His explanation of the photoelectric effect",
+      "The mass-energy equivalence E = mc²",
+    ],
+    correctIndex: 2,
+    explanation:
+      "The Nobel committee, hesitant about relativity (still considered controversial at the time), specifically cited Einstein's 1905 photoelectric effect paper. Per the divorce settlement with Mileva Marić, Einstein gave her the prize money.",
+  },
+  {
+    id: "heisenberg-helgoland",
+    prompt:
+      "Werner Heisenberg conceived the foundations of matrix mechanics in 1925 while:",
+    choices: [
+      "Lecturing at Cambridge",
+      "Recovering from severe hay fever on the North Sea island of Helgoland",
+      "Imprisoned during the war",
+      "Crossing the Atlantic by ship",
+    ],
+    correctIndex: 1,
+    explanation:
+      "In June 1925, suffering from hay fever, Heisenberg retreated to the (mostly grass-free) island of Helgoland. Working alone there, he developed the operator-algebra approach that became matrix mechanics — the first complete formulation of quantum theory.",
+  },
+  {
+    id: "marie-curie-two-nobels",
+    prompt:
+      "Marie Curie holds a unique distinction in Nobel Prize history. What is it?",
+    choices: [
+      "The youngest physics laureate ever",
+      "The only person to win Nobel Prizes in two different scientific fields",
+      "The first to win three Nobel Prizes",
+      "The first scientist to refuse a Nobel Prize",
+    ],
+    correctIndex: 1,
+    explanation:
+      "She won the 1903 Physics Prize (with Pierre Curie and Becquerel) for radioactivity, and the 1911 Chemistry Prize for discovering radium and polonium. She remains the only person with Nobels in two distinct sciences. (Linus Pauling won Chemistry and Peace — not two sciences.)",
+  },
+  {
+    id: "meitner-fission-snub",
+    prompt:
+      "Nuclear fission was discovered in late 1938 through collaboration between Otto Hahn and Lise Meitner, but the 1944 Nobel Prize in Chemistry went only to:",
+    choices: [
+      "Both Hahn and Meitner",
+      "Otto Hahn alone — Meitner was excluded",
+      "Lise Meitner alone",
+      "Albert Einstein",
+    ],
+    correctIndex: 1,
+    explanation:
+      "Meitner provided the theoretical interpretation that made fission intelligible, but as a Jewish refugee in exile from Nazi Germany, she was sidelined by the committee. Element 109 (meitnerium) was named for her in posthumous recognition; many historians consider this one of the Nobel committee's worst snubs.",
+  },
+  {
+    id: "schrodinger-arosa",
+    prompt:
+      "Erwin Schrödinger derived his famous wave equation over a 1925-26 holiday in:",
+    choices: [
+      "The French Riviera with Einstein",
+      "The Swiss Alps (Arosa) with a still-unidentified female companion",
+      "India studying philosophy",
+      "New York during a sabbatical",
+    ],
+    correctIndex: 1,
+    explanation:
+      "Schrödinger's biographer Walter Moore documented that wave mechanics was born during a Christmas 1925 / January 1926 ski holiday in Arosa, Switzerland — accompanied by a mistress whose identity remains unknown. Schrödinger was famously polyamorous, with a complicated open marriage.",
+  },
+  {
+    id: "dirac-taciturn",
+    prompt:
+      "Paul Dirac, despite his immense contributions to quantum mechanics, was famously:",
+    choices: [
+      "A flamboyant public speaker",
+      "Extremely taciturn — colleagues jokingly defined a 'Dirac' as one word per hour",
+      "A career politician late in life",
+      "Self-taught, never having attended university",
+    ],
+    correctIndex: 1,
+    explanation:
+      "Dirac's silences were legendary among physicists. He held the Lucasian Chair of Mathematics at Cambridge (Newton's old chair, later Hawking's), predicted antimatter from his 1928 equation, and shared the 1933 Nobel with Schrödinger. Asked to explain his work in plain English, he often simply repeated the equations.",
+  },
+  {
+    id: "feynman-hobbies",
+    prompt:
+      "Beyond physics, Richard Feynman was known for which eclectic pursuits?",
+    choices: [
+      "Playing bongo drums, picking locks at Los Alamos, and decoding Mayan glyphs",
+      "Competitive chess and ballroom dancing",
+      "Painting religious frescoes",
+      "Composing operas",
+    ],
+    correctIndex: 0,
+    explanation:
+      "At Los Alamos during the Manhattan Project, Feynman cracked safes containing nuclear secrets to make a point about security. He played bongos seriously, decoded Mayan codices as a hobby, and later helped diagnose the Challenger disaster live on TV. A celebrated raconteur as well as a Nobel-winning physicist (1965).",
+  },
+  {
+    id: "bohr-institute",
+    prompt:
+      "Niels Bohr's Institute for Theoretical Physics, founded in 1921 and the central hub of quantum theory's development in the 1920s-30s, is located in:",
+    choices: ["Berlin", "Copenhagen", "Princeton", "Vienna"],
+    correctIndex: 1,
+    explanation:
+      "The institute (now the Niels Bohr Institute) hosted nearly every major early quantum physicist — Heisenberg, Pauli, Schrödinger, Dirac, and many more. The 'Copenhagen interpretation' takes its name from this gathering place. Bohr won the 1922 Nobel for his model of the atom.",
+  },
+  {
+    id: "pauli-effect",
+    prompt:
+      "The 'Pauli effect' was a running joke among physicists, claiming that:",
+    choices: [
+      "Wolfgang Pauli could solve any equation in his head",
+      "Sensitive equipment would mysteriously fail when Pauli was nearby",
+      "Pauli could predict experimental results before they were run",
+      "Pauli had memorized all of physics literature",
+    ],
+    correctIndex: 1,
+    explanation:
+      "Pauli — a brilliant theorist with a reputation for harsh criticism (he coined 'not even wrong') — was so notorious for accidents around equipment that colleagues kept tallies. Once an apparatus in Göttingen failed for no reason; Pauli was later found to have been on a train passing through the city at that exact moment. Apocryphal, of course, but beloved.",
+  },
+  {
+    id: "everett-reception",
+    prompt:
+      "When Hugh Everett proposed the many-worlds interpretation in his 1957 PhD thesis at Princeton, the response was:",
+    choices: [
+      "Immediate widespread acceptance",
+      "A Nobel Prize within the year",
+      "Largely dismissed by Bohr's circle, prompting Everett to leave academia entirely",
+      "Vigorous experimental verification",
+    ],
+    correctIndex: 2,
+    explanation:
+      "Everett's adviser John Wheeler was supportive but had to soften the thesis to avoid offending Bohr. After a frosty reception in Copenhagen, Everett left physics for defense work, never returning. He died in 1982 at 51. Many-worlds gained mainstream interest only decades later, partly through Bryce DeWitt and David Deutsch.",
+  },
 ];
