@@ -4,12 +4,64 @@ import { useChat } from "@ai-sdk/react";
 import { useEffect, useRef, useState } from "react";
 import { useQuizContext } from "@/lib/quiz-context";
 
+const MIN_WIDTH = 280;
+const MIN_HEIGHT = 320;
+const DEFAULT_WIDTH = 352; // 22rem
+const DEFAULT_HEIGHT = 512; // 32rem
+
 export default function Chat() {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
+  const [size, setSize] = useState({
+    width: DEFAULT_WIDTH,
+    height: DEFAULT_HEIGHT,
+  });
   const { messages, status, sendMessage, setMessages } = useChat();
   const scrollRef = useRef<HTMLDivElement>(null);
   const quizContext = useQuizContext();
+
+  // Resize: chat is anchored to the bottom-right of the viewport, so the
+  // top-left corner is the natural drag target. We capture a starting frame
+  // (mouse + size) on pointer-down and update size as the pointer moves.
+  // setPointerCapture keeps the drag working even if the cursor leaves the
+  // tiny handle div mid-drag.
+  const dragRef = useRef<{
+    startX: number;
+    startY: number;
+    startW: number;
+    startH: number;
+  } | null>(null);
+
+  const onResizeStart = (e: React.PointerEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    dragRef.current = {
+      startX: e.clientX,
+      startY: e.clientY,
+      startW: size.width,
+      startH: size.height,
+    };
+    e.currentTarget.setPointerCapture(e.pointerId);
+  };
+
+  const onResizeMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!dragRef.current) return;
+    // Moving up-left grows the chat; subtract current pos from start pos.
+    const dx = dragRef.current.startX - e.clientX;
+    const dy = dragRef.current.startY - e.clientY;
+    const maxW = window.innerWidth - 48;
+    const maxH = window.innerHeight - 48;
+    setSize({
+      width: Math.max(MIN_WIDTH, Math.min(maxW, dragRef.current.startW + dx)),
+      height: Math.max(MIN_HEIGHT, Math.min(maxH, dragRef.current.startH + dy)),
+    });
+  };
+
+  const onResizeEnd = (e: React.PointerEvent<HTMLDivElement>) => {
+    dragRef.current = null;
+    if (e.currentTarget.hasPointerCapture(e.pointerId)) {
+      e.currentTarget.releasePointerCapture(e.pointerId);
+    }
+  };
 
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight });
@@ -71,8 +123,35 @@ export default function Chat() {
   }
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex h-[32rem] w-[22rem] flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-2xl dark:border-zinc-800 dark:bg-zinc-950">
-      <header className="flex items-center justify-between bg-gradient-to-br from-indigo-500 to-purple-600 px-4 py-3 text-white">
+    <div
+      style={{ width: size.width, height: size.height }}
+      className="fixed bottom-6 right-6 z-50 flex flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-2xl dark:border-zinc-800 dark:bg-zinc-950"
+    >
+      {/* Resize handle: top-left corner. Drag to grow the chat up-and-left. */}
+      <div
+        onPointerDown={onResizeStart}
+        onPointerMove={onResizeMove}
+        onPointerUp={onResizeEnd}
+        onPointerCancel={onResizeEnd}
+        role="separator"
+        aria-label="Resize chat"
+        className="absolute top-0 left-0 z-20 h-5 w-5 cursor-nwse-resize touch-none"
+      >
+        <svg
+          viewBox="0 0 16 16"
+          className="h-full w-full text-white/60 hover:text-white"
+        >
+          <path
+            d="M 3 8 L 8 3 M 3 12 L 12 3"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            fill="none"
+          />
+        </svg>
+      </div>
+
+      <header className="flex items-center justify-between bg-gradient-to-br from-indigo-500 to-purple-600 px-4 py-3 pl-7 text-white">
         <div>
           <div className="text-sm font-semibold">Dr. Q</div>
           <div className="text-xs opacity-80">Quantum trivia host</div>
