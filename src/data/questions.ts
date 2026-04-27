@@ -366,4 +366,18 @@ export const questions: Question[] = [
     explanation:
       "The SLAC-MIT collaboration fired high-energy electrons at protons and found they scattered off three small hard cores inside — exactly as Bjorken and Feynman's parton model predicted. Murray Gell-Mann had proposed quarks theoretically in 1964; SLAC made them physically real. Friedman, Kendall, and Taylor won the 1990 Nobel Prize for the work.",
   },
+  {
+    id: "proton-decay-lifetime",
+    prompt:
+      "Proton decay has never been observed. Experiments like Super-Kamiokande have established that, if protons decay at all, their mean lifetime must be at least:",
+    choices: [
+      "About 10¹⁰ years — roughly the age of the universe",
+      "About 10¹⁷ years",
+      "About 10³⁴ years",
+      "About 10⁴⁰ years",
+    ],
+    correctIndex: 2,
+    explanation:
+      "The Standard Model treats the proton as effectively stable — baryon number is conserved as an 'accidental' symmetry. Beyond-the-Standard-Model Grand Unified Theories predict very slow decay: the simplest (Georgi-Glashow SU(5)) predicted ~10³⁰ years and has been ruled out. Super-Kamiokande's 50,000-ton water tank watches roughly 10³³ protons; the absence of any decay event puts the lower bound around 10³⁴ years — over 10²⁴ times the age of the universe.",
+  },
 ];
