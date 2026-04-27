@@ -21,7 +21,7 @@ export default function Home() {
         href="/play"
         className="group absolute bottom-10 text-xs uppercase tracking-[0.4em] text-white/50 transition-colors hover:text-white sm:text-sm"
       >
-        Enter the quantum
+        It&apos;s time for quantum trivia
         <span className="mx-3 text-white/30">·</span>
         <span className="underline decoration-white/30 underline-offset-4 group-hover:decoration-white">
           click here
