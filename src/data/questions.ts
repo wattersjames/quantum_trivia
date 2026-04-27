@@ -352,4 +352,18 @@ export const questions: Question[] = [
     explanation:
       "Eigenstates of the Hamiltonian are 'stationary states': their probability density |ψ|² doesn't change in time — only an overall phase rotates as e^(-iEt/ℏ). Solving Ĥψ = Eψ for an atom yields its allowed energy levels, which is the foundation of atomic physics and chemistry.",
   },
+  {
+    id: "slac-quark-discovery",
+    prompt:
+      "The first experimental evidence for quarks — point-like constituents inside the proton — came from deep inelastic scattering experiments conducted in 1968-69 at:",
+    choices: [
+      "CERN, Switzerland",
+      "SLAC at Stanford, California",
+      "Fermilab, Illinois",
+      "Brookhaven National Laboratory, New York",
+    ],
+    correctIndex: 1,
+    explanation:
+      "The SLAC-MIT collaboration fired high-energy electrons at protons and found they scattered off three small hard cores inside — exactly as Bjorken and Feynman's parton model predicted. Murray Gell-Mann had proposed quarks theoretically in 1964; SLAC made them physically real. Friedman, Kendall, and Taylor won the 1990 Nobel Prize for the work.",
+  },
 ];
