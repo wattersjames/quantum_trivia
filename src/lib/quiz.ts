@@ -9,8 +9,28 @@ function shuffle<T>(arr: T[]): T[] {
   return a;
 }
 
+export function shuffleChoices(question: Question): Question {
+  // Pair each choice with its original index, shuffle the pairs, then rebuild.
+  // This way `correctIndex` follows the correct answer to its new slot, even if
+  // two choices happened to share text.
+  const indexed = question.choices.map((choice, originalIndex) => ({
+    choice,
+    originalIndex,
+  }));
+  const shuffled = shuffle(indexed);
+  return {
+    ...question,
+    choices: shuffled.map((x) => x.choice),
+    correctIndex: shuffled.findIndex(
+      (x) => x.originalIndex === question.correctIndex,
+    ),
+  };
+}
+
 export function pickRound(pool: Question[], n: number): Question[] {
-  return shuffle(pool).slice(0, Math.min(n, pool.length));
+  return shuffle(pool)
+    .slice(0, Math.min(n, pool.length))
+    .map(shuffleChoices);
 }
 
 export type RoundResult = {

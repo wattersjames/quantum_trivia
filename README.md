@@ -1,4 +1,12 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Quantum Trivia
+
+> *λ = h/p*
+
+A quantum-physics trivia game hosted by Dr. Q — an AI built on Claude via Vercel AI Gateway.
+
+**Live:** [quantum-trivia.vercel.app](https://quantum-trivia.vercel.app)
+
+---
 
 ## Getting Started
 

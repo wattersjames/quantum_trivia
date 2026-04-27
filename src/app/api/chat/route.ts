@@ -47,7 +47,7 @@ function buildSystemPrompt(context: QuestionContext | null | undefined): string 
   return `${BASE_SYSTEM_PROMPT}
 
 ---
-GAME CONTEXT — current question the player is looking at:
+GAME CONTEXT — the CURRENT question the player is looking at right now:
 
 "${question.prompt}"
 
@@ -58,7 +58,9 @@ Official explanation: ${question.explanation}
 
 ${answerStatus}
 
-When discussing this question, you may draw on the official explanation but feel free to add depth, analogies, or related context. Don't repeat the explanation verbatim — riff on it.`;
+IMPORTANT — this is the only question that matters right now. If a player just says "hint" or "help" or "explain" without naming a question, ALWAYS assume they mean THIS question. Never ask "which question?" — the question is the one shown above. If past chat messages reference a different question, those are stale; focus on the current GAME CONTEXT.
+
+When discussing this question, draw on the official explanation but add depth, analogies, or related context. Don't repeat the explanation verbatim — riff on it.`;
 }
 
 export async function POST(req: Request) {

@@ -7,13 +7,22 @@ import { useQuizContext } from "@/lib/quiz-context";
 export default function Chat() {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
-  const { messages, status, sendMessage } = useChat();
+  const { messages, status, sendMessage, setMessages } = useChat();
   const scrollRef = useRef<HTMLDivElement>(null);
   const quizContext = useQuizContext();
 
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight });
   }, [messages]);
+
+  // Reset the conversation whenever the player advances to a different question.
+  // Without this, prior question's exchanges bleed into the next, and Dr. Q
+  // gets confused about which question is being discussed.
+  const currentQuestionId = quizContext?.question.id;
+  useEffect(() => {
+    if (currentQuestionId) setMessages([]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentQuestionId]);
 
   const buildBody = () => ({
     questionContext: quizContext
