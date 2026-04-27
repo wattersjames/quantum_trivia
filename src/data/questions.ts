@@ -282,4 +282,74 @@ export const questions: Question[] = [
     explanation:
       "Everett's adviser John Wheeler was supportive but had to soften the thesis to avoid offending Bohr. After a frosty reception in Copenhagen, Everett left physics for defense work, never returning. He died in 1982 at 51. Many-worlds gained mainstream interest only decades later, partly through Bryce DeWitt and David Deutsch.",
   },
+  {
+    id: "schrodinger-psi",
+    prompt:
+      "In the Schrödinger equation iℏ ∂ψ/∂t = Ĥψ, what does the symbol ψ (psi) represent?",
+    choices: [
+      "The position of the particle",
+      "The wavefunction — a complex-valued amplitude whose squared magnitude gives probability density",
+      "The total energy of the particle",
+      "The particle's momentum",
+    ],
+    correctIndex: 1,
+    explanation:
+      "ψ is the wavefunction — it encodes the entire quantum state of the system. It's complex-valued, and by Born's rule |ψ|² gives the probability density of finding the particle at a given position. ψ itself isn't directly observable; only probabilities derived from it are.",
+  },
+  {
+    id: "schrodinger-hbar",
+    prompt:
+      "The constant ℏ (h-bar) appears throughout the Schrödinger equation. What is it, and why does it matter?",
+    choices: [
+      "The speed of light — sets the relativistic limit",
+      "Planck's constant divided by 2π — sets the natural scale of quantum effects",
+      "Boltzmann's constant — connects energy to temperature",
+      "The mass of the particle, which scales the wavefunction",
+    ],
+    correctIndex: 1,
+    explanation:
+      "ℏ = h/(2π) ≈ 1.055 × 10⁻³⁴ J·s is the reduced Planck constant — the natural unit of action in quantum mechanics. Its tiny size is why quantum effects vanish at everyday scales. If ℏ were zero, classical physics would be exact.",
+  },
+  {
+    id: "schrodinger-hamiltonian",
+    prompt:
+      "In Ĥψ = Eψ, the operator Ĥ (H-hat) is called the Hamiltonian. What does it represent?",
+    choices: [
+      "The mass of the system",
+      "The momentum of the particle",
+      "The total energy operator: kinetic energy plus potential energy",
+      "The angular momentum operator",
+    ],
+    correctIndex: 2,
+    explanation:
+      "Ĥ = T̂ + V̂ — kinetic energy plus potential energy, expressed as operators. The Schrödinger equation iℏ ∂ψ/∂t = Ĥψ says: the rate of change of ψ in time is governed by the system's total energy. Solving Ĥψ = Eψ gives the allowed energy levels of bound systems, like electron orbitals.",
+  },
+  {
+    id: "schrodinger-i",
+    prompt:
+      "Why does the imaginary unit i (√-1) appear in the time-dependent Schrödinger equation?",
+    choices: [
+      "It's a mathematical convenience that could be eliminated",
+      "Without it, the equation describes diffusion (decay) rather than wave-like quantum evolution",
+      "It accounts for friction or energy dissipation in the system",
+      "It only appears once relativity is included",
+    ],
+    correctIndex: 1,
+    explanation:
+      "The i is fundamental, not cosmetic. Without it, ∂ψ/∂t would equal a real expression and the equation would behave like a heat/diffusion equation — solutions decay rather than oscillate. The i turns time evolution into unitary rotations in complex Hilbert space, preserving probability and enabling quantum interference.",
+  },
+  {
+    id: "schrodinger-eigenvalue",
+    prompt:
+      "What does it mean physically when ψ satisfies the time-independent equation Ĥψ = Eψ?",
+    choices: [
+      "The particle is momentarily at rest",
+      "The system has no potential energy",
+      "ψ is a 'stationary state' — measuring its energy yields E with certainty, and |ψ|² is constant in time",
+      "Time has been factored out and no longer applies",
+    ],
+    correctIndex: 2,
+    explanation:
+      "Eigenstates of the Hamiltonian are 'stationary states': their probability density |ψ|² doesn't change in time — only an overall phase rotates as e^(-iEt/ℏ). Solving Ĥψ = Eψ for an atom yields its allowed energy levels, which is the foundation of atomic physics and chemistry.",
+  },
 ];
