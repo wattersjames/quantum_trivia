@@ -380,4 +380,18 @@ export const questions: Question[] = [
     explanation:
       "The Standard Model treats the proton as effectively stable — baryon number is conserved as an 'accidental' symmetry. Beyond-the-Standard-Model Grand Unified Theories predict very slow decay: the simplest (Georgi-Glashow SU(5)) predicted ~10³⁰ years and has been ruled out. Super-Kamiokande's 50,000-ton water tank watches roughly 10³³ protons; the absence of any decay event puts the lower bound around 10³⁴ years — over 10²⁴ times the age of the universe.",
   },
+  {
+    id: "schrodinger-trajectory-trick",
+    prompt:
+      "You've solved the time-dependent Schrödinger equation for a particle. How do you extract its trajectory — the path it follows from point A to point B?",
+    choices: [
+      "Trace the peak of |ψ(x,t)|² as a function of time",
+      "Compute the expectation value ⟨x(t)⟩ via Ehrenfest's theorem",
+      "You can't — in standard quantum mechanics, particles don't have trajectories between measurements",
+      "Take the wavefunction's phase, differentiate twice, and apply Newton's F = ma",
+    ],
+    correctIndex: 2,
+    explanation:
+      "Trick question. The Schrödinger equation gives you a wavefunction ψ, not a trajectory. From ψ you can compute probability densities |ψ|² and expectation values like ⟨x(t)⟩, but in standard QM an unmeasured particle doesn't HAVE a definite path — it's a wave-like distribution of possibilities, and the uncertainty principle makes 'trajectory' ill-defined. Ehrenfest's theorem gives ⟨x⟩ a classical-looking equation of motion, but that's a statistical average across many measurements, not the path of any individual particle. (Bohmian mechanics is an unconventional interpretation that DOES assign hidden trajectories, but mainstream QM doesn't.)",
+  },
 ];
